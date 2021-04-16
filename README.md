@@ -32,15 +32,16 @@ Install [Python](https://www.python.org/downloads/) and the required packages.
 Configure the following in the ```config.yaml``` file: 
 
 1. In the ```api_keys:``` section enter the username and password that you use to log in to the CSSM Web UI. 
+
 	```
-	api_keys:
-      	client_id: not required
-      	 client_secret: not required
-  	
-		username: username1_cssm 
-  		password: password1_cssm
-	
+    api_keys:
+  
+    	client_id: not required
+    	client_secret: not required
+    	username: username1_cssm
+    	password: password1_cssm
 	```
+
     
     >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](xe-sip-api-code/readme.md#restrictions-and-limitations) section in this README.md file for details.
 
