@@ -43,7 +43,7 @@ Configure the following in the ```config.yaml``` file:
 	```
 
     
-    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](#restrictions-and-limitations) section in this README.md file for details.
+    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly. See the [Restrictions and Limitations](#restrictions-and-limitations) section in this README.md file for details.
 
 2. In the ```devices:``` section, enter access information for each one of your product instances.  
 
@@ -90,7 +90,7 @@ Running the script provides you with four operations to choose from:
    After you have collected the RUM reports, manually upload the RUM reports to the corresponding Smart Account and Virtual Account in CSSM and then download the ACK.
 
 3. "  (3) Offline CSSM: Apply RUM ACK using IOS-XE API (One device at a time)": This option sends a RUM ACK file to all the product instances listed in the config.yaml file. The script performs this action, one product instance at a time. 
-4. "  (4) Offline CSSM: Apply custom-policy to all devices": This options sends the custom policy file to all product instance listed  in the config.yaml file
+4. "  (4) Offline CSSM: Apply custom-policy to all devices": This options sends the custom policy file to all product instance listed  in the config.yaml file.
 
 
 
