@@ -43,7 +43,7 @@ Configure the following in the ```config.yaml``` file:
 	```
 
     
-    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](readme.md#restrictions-and-limitations) section in this README.md file for details.
+    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](#restrictions-and-limitations) section in this README.md file for details.
 
 2. In the ```devices:``` section, enter access information for each one of your product instances.  
 
