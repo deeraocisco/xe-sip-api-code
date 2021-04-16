@@ -114,6 +114,6 @@ If you have questions, concerns, bug reports, etc., please create an issue again
 
 To provide feedback about IOS-XE SLP REST APIs,  see [CONTRIBUTING](./CONTRIBUTING.md).
 
-## Licensing info
+## Licensing Information
 
 This code is licensed under the Cisco sample code license. For details, see [LICENSE](LICENSE.md).
