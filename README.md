@@ -3,11 +3,11 @@
 
 Sample Python script written in Python 3.8.5. The script demonstrates the use of IOS-XE SLP REST APIs to automate Smart Licensing Using Policy (SLP) workflows.
 
-SLP was first introduced on Cisco IOS-XE product instances in release Cisco IOS-XE Amsterdam 17.3.2. For more information, see [About Smart Licensing Using Policy](ios-xe-smart-licensing-api/intro.md#about-smart-licensing-using-policy).
+SLP was first introduced on Cisco IOS-XE product instances in release Cisco IOS-XE Amsterdam 17.3.2. For more information, see [About Smart Licensing Using Policy](https://developer.cisco.com/docs/ios-xe/smart-licensing/#!introduction/about-smart-licensing-using-policy).
 
 ## Use Case Description
 
-For information about each API that is demonstrated in this script, see [API Endpoint and Description](ios-xe-smart-licensing-api/about-the-apis/api-endpoint-and-description).
+For information about each API that is demonstrated in this script, see [API Endpoint and Description](https://developer.cisco.com/docs/ios-xe/smart-licensing/#!about-the-apis/api-endpoint-and-description).
 
 Future enhancements include an API to return a Smart Licensing Authorization Code (SLAC).
 
@@ -43,7 +43,7 @@ Configure the following in the ```config.yaml``` file:
 	```
 
     
-    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](xe-sip-api-code/readme.md#restrictions-and-limitations) section in this README.md file for details.
+    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](readme.md#restrictions-and-limitations) section in this README.md file for details.
 
 2. In the ```devices:``` section, enter access information for each one of your product instances.  
 
@@ -101,7 +101,7 @@ Running the script provides you with four operations to choose from:
 	_When using this script_, note that all CSSM operations (communication between your own Smart Licensing application and CSSM),  must be performed manually by logging in to the CSSM Web UI at https://software.cisco.com,  and then uploading or downloading the necessary files.
     
 
-* An API to _delete_ a RUM report is not supported. This is because RUM reports, once closed, are immutable. To erase all data from a product instance, see [Decommissioning a Product Instance](ios-xe-smart-licensing-api/workflows.md#decommissioning-a-product-instance).
+* An API to _delete_ a RUM report is not supported. This is because RUM reports, once closed, are immutable. To erase all data from a product instance, see [Decommissioning a Product Instance](https://developer.cisco.com/docs/ios-xe/smart-licensing/#!recommended-workflows/decommissioning-a-product-instance).
 
 * An API to return a SLAC (for export-controlled or enforced licenses or throughput greater than 205 Mbps) is currently not supported.
 
