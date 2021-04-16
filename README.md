@@ -36,8 +36,9 @@ Configure the following in the ```config.yaml``` file:
 	api_keys:
       	client_id: not required
       	 client_secret: not required
-  	username: username1_cssm 
-  	password: password1_cssm
+  	
+		username: username1_cssm 
+  		password: password1_cssm
 	
 	```
     
