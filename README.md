@@ -1,11 +1,9 @@
 # Getting Started with IOS-XE SLP REST APIs
 
 
-Sample Python script written in Python 3.8.5. The script demonstrates the use of IOS-XE SLP REST APIs to automate SLP workflows.
-Smart Licensing Using Policy (SLP) was introduced in Cisco IOS-XE Amsterdam 17.3.2.
+Sample Python script written in Python 3.8.5. The script demonstrates the use of IOS-XE SLP REST APIs to automate Smart Licensing Using Policy (SLP) workflows.
 
-
-For more information, see [About Smart Licensing Using Policy](ios-xe-smart-licensing-api/intro.md#about-smart-licensing-using-policy).
+SLP was first introduced on Cisco IOS-XE product instances in release Cisco IOS-XE Amsterdam 17.3.2. For more information, see [About Smart Licensing Using Policy](ios-xe-smart-licensing-api/intro.md#about-smart-licensing-using-policy).
 
 ## Use Case Description
 
@@ -36,23 +34,24 @@ Configure the following in the ```config.yaml``` file:
 1. In the ```api_keys:``` section enter the username and password that you use to log in to the CSSM Web UI. 
 	```
 	api_keys:
-    	client_id: not required
-        client_secret: not required
-  		username: username1_cssm 
-  		password: password1_cssm
+      	client_id: not required
+      	client_secret: not required
+  	username: username1_cssm 
+  	password: password1_cssm
+	
 	```
     
     >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly See the [Restrictions and Limitations](xe-sip-api-code/readme.md#restrictions-and-limitations) section in this README.md file for details.
 
-2. In the ```devices:``` section, enter access information for each one of your devices. The term "device" here refers to the product instance. 
+2. In the ```devices:``` section, enter access information for each one of your product instances.  
 
 	For ```id:``` provide a monotonically increasing ID.
 
-	For ```ip:``` provide the management IP address
+	For ```ip:``` enter the management IP address of the product instance.
 
-	For ```username:``` provide the username to log in to the device. 
+	For ```username:``` provide the username to log in to the product instance. 
 
-	For ```password:``` provide the and the username to log in to the device. 
+	For ```password:``` provide the and the username to log in to the product instance. 
 
 	```
     devices:
@@ -66,30 +65,32 @@ Configure the following in the ```config.yaml``` file:
 
 ## Usage
 
-Run the Python script in a command line interface (CLI) by entering the Python command. 
+Run the Python script by entering the **python** command in a command prompt or shell prompt. 
 
 ```
 python sl-api-demo.py
 ``` 
 
 Running the script provides you with four operations to choose from:
-1. Get a list of Smart Accounts and Virtual Accounts associated with the CSSM username.
-   >**Note**: This option is not an API on the device.  The sample code furnished here, provides this additional option. 
-2. Collect RUM reports for all the product instances listed in the config.yaml file for the default duration of 90 days.
-   
-   Selecting this option also automatically closes all _open_ RUM reports on the product instance.
-   
-   After you have collected the RUM reports, manually upload the RUM reports to the corresponding Smart Account and Virtual Account in CSSM and then download the ACK.
-
-3. Send a RUM ACK file to all the product instances listed in the config.yaml file. The script performs this action, one product instance at a time. 
-4. Sends the custom policy file to all product instance listed  in the config.yaml file
-
 ```
     print("  (1) Online CSSM: API to get list of SA/VA")
     print("  (2) Offline CSSM: Collect RUM reports using IOS-XE API and upload offline")
     print("  (3) Offline CSSM: Apply RUM ACK using IOS-XE API (One device at a time)")
     print("  (4) Offline CSSM: Apply custom-policy to all devices")
 ```
+1. "  (1) Online CSSM: API to get list of SA/VA": This option gets a list of Smart Accounts and Virtual Accounts associated with the CSSM username.
+   >**Note**: This option is not an API on the product instance.  The sample code furnished here, provides this additional option. 
+
+2. "  (2) Offline CSSM: Collect RUM reports using IOS-XE API and upload offline":  This option collects RUM reports for all the product instances listed in the config.yaml file for the default duration of 90 days.
+   
+   Selecting this option also automatically closes all _open_ RUM reports on the product instance.
+   
+   After you have collected the RUM reports, manually upload the RUM reports to the corresponding Smart Account and Virtual Account in CSSM and then download the ACK.
+
+3. "  (3) Offline CSSM: Apply RUM ACK using IOS-XE API (One device at a time)": This option sends a RUM ACK file to all the product instances listed in the config.yaml file. The script performs this action, one product instance at a time. 
+4. "  (4) Offline CSSM: Apply custom-policy to all devices": This options sends the custom policy file to all product instance listed  in the config.yaml file
+
+
 
 ## Restrictions and Limitations
 
