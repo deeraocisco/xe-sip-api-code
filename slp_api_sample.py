@@ -220,6 +220,9 @@ class CSSM:
     A class to represent CSSM for online API calls or offline file IO.
 
     """
+    def __repr__(self):
+        return "conn_type %s" % (self.conn_type)
+
     def __init__(self, cssm_access_type, cfg):
         """
         The constructor for Device class.
@@ -233,14 +236,10 @@ class CSSM:
                 self.conn_type = 'online'
                 self.client_id = cfg['api_keys']['client_id']
                 self.client_secret = cfg['api_keys']['client_secret']
-                self.username = cfg['api_keys']['username']
-                self.password = cfg['api_keys']['password']
             else:
                 self.conn_type = 'offline'
                 self.client_id = ''
                 self.client_secret = ''
-                self.username = ''
-                self.password = ''
                 self.sa_domain = ''
                 self.va_name = ''
                 self.uuid = ''
@@ -263,21 +262,20 @@ class CSSM:
         d = dict()
         uri = "https://cloudsso.cisco.com/as/token.oauth2"
         body = {"client_id": self.client_id, "client_secret": self.client_secret,
-                "username": self.username, "password": self.password,
-                "grant_type": "password"}
+                "grant_type": "client_credentials"}
         headers = {'Content-Type': "application/x-www-form-urlencoded"}
-        print("Using uri: ", uri, "headers: ", headers, " body: ", body)
+        #print("Using uri: ", uri, "headers: ", headers, " body: ", body)
         response = requests.request("POST", uri, headers=headers, params=body)
         try:
             token_type = response.json()['token_type']
-            print("CSSM API response: ", response.json())
+            #print("CSSM API response: ", response.json())
             self.access_token = response.json()['access_token']
-            print("CSSM Get Access Token returned access_token: ", self.access_token)
+            print("Received Access Token from CSSM: ", self.access_token)
             # refresh_token not validated here
             self.access_token_expires_in = response.json()['expires_in']
-            print("====>>>>    Success: Got OAuth Token    <<<<====\n\n")
+            #print("====>>>>    Success: Got OAuth Token    <<<<====\n\n")
         except Exception as e:
-            d['message'] = 'Please check your username/password!'
+            d['message'] = 'Please check your client credentials!'
             print("CSSM Get Access Token returned error: ", e)
             return d
 
@@ -297,14 +295,14 @@ class CSSM:
         """
         d = dict()
         uri = "https://swapi.cisco.com/services/api/services/api/smart-accounts-and-licensing/v2/accounts/search"
-        print("CSSM SAVA API call with access token: ", self.access_token)
+        #print("CSSM SAVA API call with access token: ", self.access_token)
         headers = {
             "Authorization": "Bearer " + self.access_token,
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         }
         response = requests.request("GET", uri, headers=headers)
-        print("CSSM API SAVA List response: ", response.text)
+        #print("CSSM API SAVA List response: ", response.text)
         try:
             json_resp = response.json()
             if('status' in json_resp.keys()):
@@ -321,7 +319,12 @@ class CSSM:
                 print("CSSM Get SAVA response has 0 accounts")
                 d['message'] = 'No valid accounts for this user'
                 return d
-            print("Accounts: ", json_resp['accounts'])
+            #print("Accounts: ", json_resp['accounts'])
+            for account in json_resp['accounts']:
+                print ("Account Name: ", account['name'])
+                print ("Virtual Accounts:")
+                for va in account['virtual_accounts']:
+                    print ("    VA Name: ", va['name']) 
 
             sa = json_resp['accounts'][0]
             self.sa_domain = sa['domain']
@@ -336,7 +339,7 @@ class CSSM:
             self.va_id = va['virtual_account_id']
 
         except Exception as e:
-            d['message'] = 'Please check your username/password!'
+            d['message'] = 'Please check your access token!'
             print("Got SAVA List execption: ", e)
             return d
 
@@ -362,7 +365,7 @@ class CSSM:
 
 def read_config():
     """
-    This function reads config from ./sl-app-config.yaml
+    This function reads config from ./config.yaml
 
         Parameters:
             None.
@@ -371,8 +374,8 @@ def read_config():
             None.
         """
     try:
-        with open("./sl-app-config.yaml", 'r') as yamlfile:
-            cfg = yaml.load(yamlfile)
+        with open("./config.yaml", 'r') as yamlfile:
+            cfg = yaml.load(yamlfile, Loader=yaml.FullLoader)
         return cfg
     except Exception:
         print("Yaml file incomplete or invalid format")
@@ -397,7 +400,7 @@ def run_offline_rum():
 
     # Browse dev_info. For each device:
     num_devices = len(cfg['devices'])
-    print("Number of devices in sl-app-config.yaml: ", num_devices)
+    print("Number of devices in config.yaml: ", num_devices)
     # Create dir structure and manifesto file for offline upload to CSSM
     now = datetime.now()
     curr_time = now.strftime("%y%b%d_%H_%M_%S_%f")[:-3]
@@ -439,13 +442,10 @@ def run_offline_rum():
         for name in all_file_names:
             print("Adding file ", name, " to ", va_tar_name)
             va_tar.add(name, arcname=os.path.basename(name))
-            os.remove(name)
     with tarfile.open(sa_tar_name, "w:gz") as sa_tar:
         print("Adding file ", mfname, " and ", va_tar_name, " to creat ", sa_tar_name)
         sa_tar.add(mfname, arcname=os.path.basename(mfname))
         sa_tar.add(va_tar_name, arcname=os.path.basename(va_tar_name))
-    os.remove(mfname)
-    os.remove(va_tar_name)
     return
 
 
@@ -497,7 +497,6 @@ def run_offline_ack(in_fname):
                 print("ID not found in ack file: ", ack_fname)
     vatar.close()
     shutil.rmtree(dir_name)
- 
     return
 
 
@@ -539,7 +538,7 @@ def run_online():
         None.
     """
 
-    # Step 1: Use username/password and create access token
+    # Step 1: Use client credentials to create access token
     cfg = read_config()
     cssm = CSSM('on', cfg)
     token_rsp = cssm.GetAccessToken()
@@ -572,3 +571,4 @@ if __name__ == "__main__":
     elif value == '4':
         fname = input("Input policy file name with path: ")
         run_offline_policy(fname)
+
