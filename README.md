@@ -31,29 +31,22 @@ Install [Python](https://www.python.org/downloads/) and the required packages.
 
 Configure the following in the ```config.yaml``` file: 
 
-1. In the ```api_keys:``` section enter the username and password that you use to log in to the CSSM Web UI. 
+1. Turn-on the connection to CSSM.
+	```
+	cssm_connection: on
+	```
+2. Enter the ```client_id::``` and ```client_secret```. 
 
 	```
     api_keys:
   
-    	client_id: not required
-    	client_secret: not required
-    	username: username1_cssm
-    	password: password1_cssm
+    client_id: <Your client_id obtained from apidocs-prod.cisco.com>
+	
+	client_secret: <Your client_secret obtained from apidocs-prod.cisco.com>
 	```
 
-    
-    >**Note**: Entries for ```client_id``` and ```client_secret``` are not required, because this version of the script does not interact with CSSM directly. See the [Restrictions and Limitations](#restrictions-and-limitations) section in this README.md file for details.
 
-2. In the ```devices:``` section, enter access information for each one of your product instances.  
-
-	For ```id:``` provide a monotonically increasing ID.
-
-	For ```ip:``` enter the management IP address of the product instance.
-
-	For ```username:``` provide the username to log in to the product instance. 
-
-	For ```password:``` provide the and the username to log in to the product instance. 
+3. Enter access information for each one of your product instances.  
 
 	```
     devices:
@@ -63,7 +56,13 @@ Configure the following in the ```config.yaml``` file:
     	username: username2
     	password: password2
 	```
+	For ```id:``` provide a monotonically increasing ID.
 
+	For ```ip:``` enter the management IP address of the product instance.
+
+	For ```username:``` provide the username to log in to the product instance. 
+
+	For ```password:``` provide the and the username to log in to the product instance. 
 
 ## Usage
 
