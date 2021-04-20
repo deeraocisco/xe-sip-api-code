@@ -44,7 +44,7 @@ Configure the following in the ```config.yaml``` file:
 	
 	client_secret: <Your client_secret obtained from apidocs-prod.cisco.com>
 	```
-
+For information about generating a Client ID and a Client Secret,  see https://apidocs-prod.cisco.com/?path=requestapiinfo.  
 
 3. Enter access information for each one of your product instances.  
 
