@@ -35,7 +35,7 @@ Configure the following in the ```config.yaml``` file:
 	```
 	cssm_connection: on
 	```
-2. Enter the ```client_id::``` and ```client_secret```. 
+2. Enter the ```client_id:``` and ```client_secret```. 
 
 	```
     api_keys:
